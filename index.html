@@ -40,9 +40,18 @@ footer{padding:28px 0;border-top:1px solid var(--line);color:var(--muted);font-s
 <article class="pricecard"><h3>Bot / Content</h3><div class="price">от 29 €</div><p>Небольшая автоматизация или контент-задача.</p><ul><li>Простой бот или короткий ролик</li><li>Согласование сценария</li><li>Базовое тестирование</li><li>Передача файлов</li></ul><a class="btn ghost" href="#contact">Обсудить задачу</a></article></div><p style="color:var(--muted);font-size:12px;margin-top:15px">Домен, платный хостинг, API, лицензии и платные материалы не включены и согласуются отдельно.</p></section>
 <section class="wrap" id="process"><div class="top"><div><div class="kicker">От идеи до запуска</div><h2>Просто. Прозрачно.<br>По шагам.</h2></div></div><div class="steps">
 <div class="step"><b>01 / БРИФ</b><h3>Уточняем задачу</h3><p>Цель, аудитория, примеры, сроки и результат.</p></div><div class="step"><b>02 / ПЛАН</b><h3>Фиксируем объём</h3><p>Письменно согласуем цену, этапы и правки.</p></div><div class="step"><b>03 / РАБОТА</b><h3>Создаём</h3><p>Показываем промежуточный результат и тестируем.</p></div><div class="step"><b>04 / ЗАПУСК</b><h3>Передаём проект</h3><p>Отдаём готовый результат и инструкцию.</p></div></div></section>
-<section class="wrap" id="contact"><div class="cta"><div class="kicker">Есть идея?</div><h2>Давай сделаем её реальностью.</h2><p>Оставь заявку — подготовим план и оценку стоимости.</p></div><form id="form"><input id="name" required placeholder="Твоё имя"><input id="contact" required placeholder="Telegram или email"><textarea id="task" required placeholder="Что нужно сделать? Сайт, бот, дизайн, монтаж..."></textarea><button class="btn" type="submit">Скопировать заявку ↗</button><div id="note">Форма копирует заявку. Добавь свои реальные контакты перед публикацией.</div></form></section>
+<section class="wrap" id="contact"><div class="cta"><div class="kicker">Есть идея?</div><h2>Давай сделаем её реальностью.</h2><p>Оставь заявку — подготовим план и оценку стоимости.</p></div><form id="form"><input id="name" required placeholder="Твоё имя"><input id="contact" required placeholder="Telegram или email"><textarea id="task" required placeholder="Что нужно сделать? Сайт, бот, дизайн, монтаж..."></textarea><button class="btn" type="submit">Отправить заявку в Telegram ↗</button><div id="note">Заявка откроется в Telegram-чате @mozimka. Клиенту нужно нажать «Отправить».</div></form></section>
 </main><footer class="wrap"><div><b class="logo">NEXORA</b><br>Digital studio · Сайты · Боты · Дизайн · Видео</div><div>© <span id="year"></span> NEXORA · Независимая студия</div></footer>
 <script>
 const menu=document.getElementById('menu'),links=document.getElementById('links');menu.onclick=()=>links.classList.toggle('open');links.querySelectorAll('a').forEach(a=>a.onclick=()=>links.classList.remove('open'));document.getElementById('year').textContent=new Date().getFullYear();
-document.getElementById('form').onsubmit=async e=>{e.preventDefault();let t=`Заявка в NEXORA\nИмя: ${name.value}\nКонтакт: ${contact.value}\nЗадача: ${task.value}`;try{await navigator.clipboard.writeText(t);document.getElementById('note').textContent='Заявка скопирована. Отправь её клиенту/в свой рабочий Telegram после настройки контактов.'}catch{document.getElementById('note').textContent=t}};
+document.getElementById('form').onsubmit=e=>{
+ e.preventDefault();
+ const clientName=document.getElementById('name').value.trim();
+ const clientContact=document.getElementById('contact').value.trim();
+ const clientTask=document.getElementById('task').value.trim();
+ const message=`Здравствуйте! Новая заявка с сайта NEXORA.\nИмя: ${clientName}\nКонтакт для ответа: ${clientContact}\nЗадача: ${clientTask}`;
+ const telegramUrl='https://t.me/mozimka?text='+encodeURIComponent(message);
+ document.getElementById('note').textContent='Откроется Telegram с подготовленной заявкой. Нажми «Отправить», чтобы она пришла владельцу NEXORA.';
+ window.open(telegramUrl,'_blank','noopener,noreferrer');
+};
 </script></body></html>
